@@ -36,7 +36,7 @@ class Staff:
             )
         )
 
-        self.market.sort(key=lambda markets: markets.prodict)
+        self.market.sort(key=lambda markets: markets.product)
 
     def __str__(self):
         # Заголовок таблицы.
@@ -188,7 +188,7 @@ if __name__ == '__main__':
 
         elif command.startswith('save '):
             # Разбить команду на части для выделения имени файла.
-            parts = command.split(' ', maxsplit=1)
+            parts = command.split(maxsplit=1)
             # Сохранить данные в файл.
             staff.save(parts[1])
 
@@ -197,8 +197,8 @@ if __name__ == '__main__':
             print("Список команд:\n")
             print("add - добавить продукт;")
             print("list - вывести список продуктов;")
-            print("load <имя файла> - загрузить данные из файла;")
-            print("save <имя файла> - сохранить данные в файл;")
+            print("load <имя_файла> - загрузить данные из файла;")
+            print("save <имя_файла> - сохранить данные в файл;")
             print("select <товар> - информация о товаре;")
             print("help - отобразить справку;")
             print("exit - завершить работу с программой.")

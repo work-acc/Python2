@@ -22,8 +22,8 @@ class Date:
         self.month = int(month)
         self.day = int(day)
         self.number = float(number)
-        self.kk = 0
         self.data1 = int(data1)
+        self.kk = 0
         self.cc = 0
         self.s = 0
         self.q = 0
@@ -53,6 +53,7 @@ class Date:
         self.difference()
 
     def display(self):
+        print(f"{self.cc}")
         print(f"{self.kk}")
         print(f"{self.s}")
         print(f"{self.q}")
@@ -88,12 +89,39 @@ class Date:
         else:
             self.r = self.kk - self.cc
 
-    def __str__(self):
-        return "New data: {}".format(self.cc)
+    def __lt__(self, other):
+        return self.cc < other.cc
+
+    def __gt__(self, other):
+        return self.cc > other.cc
+
+    def __le__(self, other):
+        return self.cc <= other.cc
+
+    def __ge__(self, other):
+        return self.cc >= other.cc
+
+    def __eq__(self, other):
+        return self.cc == other.cc
+
+    def __add__(self, other):
+        return self.cc + other.cc
+
+    def __sub__(self, other):
+        return self.cc - other.cc
 
 
 if __name__ == '__main__':
     r1 = Date()
     r1.read()
     r1.display()
-    print(r1)
+    r2 = Date()
+    r2.read()
+
+    print(f"Year first < Year second?: {r1 < r2}")
+    print(f"Year first > Year second?: {r1 > r2}")
+    print(f"Year first <= Year second?: {r1 <= r2}")
+    print(f"Year first >= Year second?: {r1 >= r2}")
+    print(f"Year first = Year second?: {r1 == r2}")
+    print(f"Year first + Year second?: {r1 + r2}")
+    print(f"Year first - Year second?: {r1 - r2}")
