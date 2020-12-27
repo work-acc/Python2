@@ -10,7 +10,6 @@
 # также загрузку и сохранение данных в формат XML.
 
 from dataclasses import dataclass, field
-from datetime import date
 import sys
 from typing import List
 import xml.etree.ElementTree as ET
@@ -20,7 +19,7 @@ import xml.etree.ElementTree as ET
 class markets:
     product: str
     shop: str
-    price: int
+    price: float
 
 
 @dataclass
@@ -73,13 +72,14 @@ class Staff:
         return '\n'.join(table)
 
     def select(self, period):
-        # Получить текущую дату.
-        today = date.today()
-
+        parts = command.split(' ', maxsplit=1)
+        period = str(parts[1])
+        count = 0
         result = []
-        for market in self.market:
-            if today.year - market.price >= period:
-                result.append(market)
+        for markets in self.market:
+            if product in markets.product:
+                count += 1
+                result.append(markets)
         return result
 
     def load(self, filename):
@@ -98,7 +98,7 @@ class Staff:
                 elif element.tag == 'shop':
                     shop = element.text
                 elif element.tag == 'price':
-                    price = int(element.text)
+                    price = float(element.text)
 
                 if product is not None and shop is not None \
                         and price is not None:
@@ -146,9 +146,9 @@ if __name__ == '__main__':
 
         elif command == 'add':
             # Запросить данные о товаре.
-            product = input("Название товара? ")
+            product = str(input("Название товара? "))
             shop = input("Название магазина? ")
-            price = int(input("Стоимость товара в руб.? "))
+            price = float(input("Стоимость товара в руб.? "))
 
             # Добавить работника.
             staff.add(product, shop, price)
@@ -162,19 +162,11 @@ if __name__ == '__main__':
             parts = command.split(maxsplit=1)
             # Запросить товар.
             selected = staff.select(parts[1])
-
-            parts = command.split(' ', maxsplit=2)
-            # Получить требуемый стаж.
-            period = str(parts[1])
-
-            # Инициализировать счетчик.
-            count = 0
-
             # Вывести результаты запроса.
             if selected:
-                for idx, markets in enumerate(selected, 1):
+                for count, markets in enumerate(selected, 1):
                     print(
-                        '{:>4}: {}'.format(idx, markets.product)
+                        '{:>4}: {}'.format(count, markets.product)
                     )
             else:
                 print("Товар не найден.")
