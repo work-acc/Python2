@@ -19,36 +19,28 @@ class Date:
         self.month = int(month)
         self.day = int(day)
         self.number = float(number)
-        self.leap = 0
-        self.add_date = 0
-        self.sub_date = 0
-        self.dif = 0
-
-        self.add()
-        self.sub()
-        self.leap_year()
-        self.difference()
 
     def add(self):
         a = datetime.date(self.year, self.month, self.day)
         b = datetime.timedelta(days=self.number)
-        self.add_date = a + b
-
+        return a + b
+    
     def sub(self):
         a = datetime.date(self.year, self.month, self.day)
         b = datetime.timedelta(days=self.number)
-        self.sub_date = a - b
-
+        return a - b
+        
     def leap_year(self):
-        self.leap = (self.year % 4 == 0 and self.year % 100 != 0) or (self.year % 400 == 0)
-
+        leap = (self.year % 4 == 0 and self.year % 100 != 0) or (self.year % 400 == 0)
+        return f"Високосный: {leap}"
+        
     def difference(self):
         a = datetime.date(self.year, self.month, self.day)
         b = datetime.timedelta(days=self.number)
         x = a + b
         y = a - b
-        self.dif = x - y
-
+        return x - y
+        
     def __str__(self):
         return f"{self.year, self.month, self.day} \nВисокосный: {self.leap} \nПрибавление кол-ва дней: {self.add_date}" \
                f" \nВычитание кол-ва дней: {self.sub_date} \nКоличество дней между датами: {self.dif}"
