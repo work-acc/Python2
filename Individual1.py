@@ -14,36 +14,37 @@ import datetime
 
 class Date:
 
-    def __init__(self, year=1, month=1, day=1, number=10):
+    def __init__(self, year=1, month=1, day=1, days=10):
         self.year = int(year)
         self.month = int(month)
         self.day = int(day)
-        self.number = float(number)
+        self.days = float(days)
 
-    def add(self):
+    def lt(self):
         a = datetime.date(self.year, self.month, self.day)
-        b = datetime.timedelta(days=self.number)
-        return a + b
-    
-    def sub(self):
+        b = datetime.timedelta(days=self.days)
+        return f"После: {a + b < a - b}"
+
+    def eq(self):
         a = datetime.date(self.year, self.month, self.day)
-        b = datetime.timedelta(days=self.number)
-        return a - b
-        
-    def leap_year(self):
-        leap = (self.year % 4 == 0 and self.year % 100 != 0) or (self.year % 400 == 0)
-        return f"Високосный: {leap}"
-        
+        b = datetime.timedelta(days=self.days)
+        return f"Равно: {a + b == a - b}"
+
+    def gt(self):
+        a = datetime.date(self.year, self.month, self.day)
+        b = datetime.timedelta(days=self.days)
+        return f"До: {a + b > a - b}"
+
     def difference(self):
         a = datetime.date(self.year, self.month, self.day)
-        b = datetime.timedelta(days=self.number)
+        b = datetime.timedelta(days=self.days)
         x = a + b
         y = a - b
-        return x - y
-        
+        return f"Кол-во дней между датами: {x - y}"
+
     def __str__(self):
-        return f"{self.year, self.month, self.day} \nВисокосный: {self.leap} \nПрибавление кол-ва дней: {self.add_date}" \
-               f" \nВычитание кол-ва дней: {self.sub_date} \nКоличество дней между датами: {self.dif}"
+        leap = (self.year % 4 == 0 and self.year % 100 != 0) or (self.year % 400 == 0)
+        return f"{self.year, self.month, self.day} \nВисокосный: {leap}"
 
     def __lt__(self, other):
         return (self.year, self.month, self.day) < (other.year, other.month, other.day)
@@ -66,6 +67,10 @@ if __name__ == '__main__':
     print(f"r1 = {r1}")
     r2 = Date(year=1999, month=3, day=20)
     print(f"r2 = {r2}")
+    print(r1.difference())
+    print(r1.lt())
+    print(r1.eq())
+    print(r1.gt())
 
     print(f"r1 < r2: {r1 < r2}")
     print(f"r1 > r2: {r1 > r2}")
