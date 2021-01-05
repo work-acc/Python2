@@ -14,37 +14,30 @@ import datetime
 
 class Date:
 
-    def __init__(self, year=1, month=1, day=1, days=10):
-        self.year = int(year)
-        self.month = int(month)
-        self.day = int(day)
-        self.days = float(days)
+    def __init__(self, year=1, month=1, day=1):
 
-    def lt(self):
-        a = datetime.date(self.year, self.month, self.day)
-        b = datetime.timedelta(days=self.days)
-        return f"После: {a + b < a - b}"
+        try:
+            if int(year) and int(month) and int(day):
+                self.year = int(year)
+                self.month = int(month)
+                self.day = int(day)
+        except ValueError:
+            print('Вы ввели не число!')
 
-    def eq(self):
-        a = datetime.date(self.year, self.month, self.day)
-        b = datetime.timedelta(days=self.days)
-        return f"Равно: {a + b == a - b}"
-
-    def gt(self):
-        a = datetime.date(self.year, self.month, self.day)
-        b = datetime.timedelta(days=self.days)
-        return f"До: {a + b > a - b}"
-
-    def difference(self):
-        a = datetime.date(self.year, self.month, self.day)
-        b = datetime.timedelta(days=self.days)
-        x = a + b
-        y = a - b
-        return f"Кол-во дней между датами: {x - y}"
+    def __sub__(self, other):
+        if isinstance(other, Date):
+            a = datetime.date(self.year, self.month, self.day)
+            b = datetime.date(other.year, other.month, other.day)
+            return int((a - b).days)
+        else:
+            return ValueError()
 
     def __str__(self):
         leap = (self.year % 4 == 0 and self.year % 100 != 0) or (self.year % 400 == 0)
         return f"{self.year, self.month, self.day} \nВисокосный: {leap}"
+
+    def __repr__(self):
+        return self.__str__()
 
     def __lt__(self, other):
         return (self.year, self.month, self.day) < (other.year, other.month, other.day)
@@ -65,15 +58,12 @@ class Date:
 if __name__ == '__main__':
     r1 = Date(year=2020, month=1, day=24)
     print(f"r1 = {r1}")
-    r2 = Date(year=1999, month=3, day=20)
+    r2 = Date(year=2020, month=1, day=4)
     print(f"r2 = {r2}")
-    print(r1.difference())
-    print(r1.lt())
-    print(r1.eq())
-    print(r1.gt())
 
-    print(f"r1 < r2: {r1 < r2}")
-    print(f"r1 > r2: {r1 > r2}")
-    print(f"r1 == r2: {r1 == r2}")
+    print(f"r1 - r2: {r1 - r2}")
+    print(f"r1 < r2 (После): {r1 < r2}")
+    print(f"r1 > r2 (До): {r1 > r2}")
+    print(f"r1 == r2 (Равно): {r1 == r2}")
     print(f"r1 >= r2: {r1 >= r2}")
     print(f"r1 <= r2: {r1 <= r2}")
